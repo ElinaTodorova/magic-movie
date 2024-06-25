@@ -23,8 +23,27 @@ const getOneMovie = (movieId) => {
 
     return movie;
 }
+
+const getMovieByCriteres = (title, genre, year) => {
+    let allMovies = movies.slice();
+
+    if(title) {
+        allMovies = allMovies.filter((movie) => movie.title.toLocaleLowerCase().includes(title.toLocaleLowerCase()));
+    }
+
+    if(genre) {
+        allMovies = allMovies.filter((movie) => movie.genre.toLocaleLowerCase() === genre.toLocaleLowerCase());
+    }
+
+    if(year) {
+        allMovies = allMovies.filter((movie) => movie.year === year)
+    }
+
+    return allMovies;
+}
 module.exports = {
     getAllMovies,
     createMovie,
-    getOneMovie
+    getOneMovie, 
+    getMovieByCriteres
 }

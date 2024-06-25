@@ -18,6 +18,14 @@ router.get('/movies/:id/details', (req, res) => {
     let movie = movieService.getOneMovie(movieId);
 
     res.render('details', {movie})
+});
+
+router.get('/search', (req, res) => {
+    const {title, genre, year} = req.query;
+   
+    let movies = movieService.getMovieByCriteres(title, genre, year);
+
+    res.render('search', {movies})
 })
 
 module.exports = router;
