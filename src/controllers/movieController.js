@@ -13,9 +13,10 @@ router.post('/create', (req, res) => {
     res.redirect('/');
 });
 
-router.get('/movies/:id/details', (req, res) => {
-    let movieId = req.params.id;
-    let movie = movieService.getOneMovie(movieId);
+router.get('/movies/:id', (req, res) => {
+    const movieId = req.params.id;
+    const movie = movieService.getOneMovie(movieId);
+    movie.rating = new Array(Number(movie.rating)).fill(true)
 
     res.render('details', {movie})
 });
