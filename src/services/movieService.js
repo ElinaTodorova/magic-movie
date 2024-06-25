@@ -1,4 +1,5 @@
 const movies = [{
+    _id: 1,
     title: 'Jungle Cuise',
     genre: 'Adventure',
     director: 'Spilberg',
@@ -13,10 +14,17 @@ const getAllMovies = () => {
 }
 
 const createMovie = (movie) => {
+    movie._id = movies[movies.length - 1]._id + 1;
     movies.push(movie);
 }
 
+const getOneMovie = (movieId) => {
+    let movie = movies.find((el) => el._id === Number(movieId));
+
+    return movie;
+}
 module.exports = {
     getAllMovies,
-    createMovie
+    createMovie,
+    getOneMovie
 }
