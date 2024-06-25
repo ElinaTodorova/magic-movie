@@ -13,9 +13,7 @@ const getAllMovies = () => {
 }
 
 const createMovie = (movie) => {
-    let allMovies = movies.slice();
-
-    allMovies.push(movie);
+    movies.push(movie);
 }
 
 module.exports = {
