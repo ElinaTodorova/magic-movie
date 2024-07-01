@@ -23,27 +23,28 @@ const createMovie = (movie) => {
 }
 
 const getOneMovie = (movieId) => {
-    let movie = movies.find((el) => el._id === Number(movieId));
+    let movie = Movie.findById(movieId);
 
     return movie;
 }
 
 const getMovieByCriteres = (title, genre, year) => {
-    let allMovies = movies.slice();
+    let query = {};
 
     if(title) {
-        allMovies = allMovies.filter((movie) => movie.title.toLocaleLowerCase().includes(title.toLocaleLowerCase()));
+        query.title = new RegExp(title, 'i');    
     }
 
     if(genre) {
-        allMovies = allMovies.filter((movie) => movie.genre.toLocaleLowerCase() === genre.toLocaleLowerCase());
+        query.genre = new RegExp(genre, 'i');
     }
 
     if(year) {
-        allMovies = allMovies.filter((movie) => movie.year === year)
+        query.year = year;
     }
 
-    return allMovies;
+
+    return Movie.find(query);
 }
 module.exports = {
     getAllMovies,
