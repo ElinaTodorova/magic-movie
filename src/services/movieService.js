@@ -15,7 +15,7 @@ const movies = [{
 
 
 const getAllMovies = () => {
-    return movies.slice();
+    return Movie.find();
 }
 
 const createMovie = (movie) => {
