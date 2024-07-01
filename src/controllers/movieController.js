@@ -5,10 +5,10 @@ router.get('/create', (req, res) => {
     res.render('create');
 });
 
-router.post('/create', (req, res) => {
+router.post('/create', async (req, res) => {
     let newMovie = req.body;
 
-    movieService.createMovie(newMovie);
+    await movieService.createMovie(newMovie);
 
     res.redirect('/');
 });
