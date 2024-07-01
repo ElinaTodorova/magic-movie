@@ -1,7 +1,12 @@
 const router = require("express").Router();
+const castService = require("../services/castService.js");
 
-router.get('/cast/create', (req, res) => {
+router.get('/create', (req, res) => {
     res.render('cast/create')
 });
+
+router.post('/create', async (req, res) => {
+    await castService.createCast(req.body);
+})
 
 module.exports = router;
