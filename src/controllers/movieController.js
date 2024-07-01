@@ -31,11 +31,19 @@ router.get('/search', async (req, res) => {
 });
 
 router.get('/movies/:movieId/attach', async (req, res) => {
-    const movie = await movieService.getOneMovie(req.params.movieId);
-    const casts = await castService.getAll();
+    const movie = await movieService.getOneMovie(req.params.movieId).lean();
+    const casts = await castService.getAll().lean();
 
-    console.log(movie);
-    console.log(casts)
+    res.render('cast/attach', {movie, casts})
+});
+
+router.post('/movies/:movieId/attach', async (req, res) => {
+    const castId = req.body.cast;
+    const movieId = req.params.movieId;
+
+    await movieService.attach(movieId, castId);
+
+    res.redirect(`/movies/${movieId}/attach`)
 })
 
 module.exports = router;

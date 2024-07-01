@@ -7,6 +7,8 @@ router.get('/create', (req, res) => {
 
 router.post('/create', async (req, res) => {
     await castService.createCast(req.body);
+
+    res.redirect('/');
 })
 
 module.exports = router;
