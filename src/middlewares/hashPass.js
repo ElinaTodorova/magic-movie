@@ -1,9 +1,13 @@
 const bcrypt = require("bcrypt");
 
 const hashPass = async (req, res, next) => {
-    const userPassword = req.body.password;
+    const {password, rePassword} = req.body;
 
-    const hash = await bcrypt.hash(userPassword, 13);
+    if(password !== rePassword) {
+        throw new Error('Two password doenst match!')
+    }
+
+    const hash = await bcrypt.hash(password, 13);
 
     req.body.password = hash;
 
