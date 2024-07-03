@@ -18,9 +18,7 @@ router.post('/login', async (req, res) => {
     res.redirect('/auth/login');
     console.error('Invalid token')
   }
-
-
-})
+});
 
 router.get('/register', (req, res) => {
   res.render('user/register');
@@ -33,6 +31,12 @@ router.post('/register', hashPass, async (req, res) => {
     await userServices.register(userData);
 
     res.redirect('/auth/login')
+});
+
+router.get('/logout', (req, res) => {
+  res.clearCookie('auth');
+
+  res.redirect('/');
 });
 
 module.exports = router;
