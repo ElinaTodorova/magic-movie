@@ -5,8 +5,12 @@ const getAllMovies = () => {
     return Movie.find();
 };
 
-const createMovie = (movie) => {
-    return Movie.create(movie)
+const createMovie = (movieData, userId) => {
+    const newMovie = {
+        ...movieData,
+        owner : userId
+    };
+    return Movie.create(newMovie)
 };
 
 const getOneMovie = (movieId) => {

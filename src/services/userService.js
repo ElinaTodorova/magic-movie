@@ -28,12 +28,12 @@ const login = async (email, password) => {
         throw new Error(errorMsg)
     }
 
-    const authParams = {
+    const payload = {
         email : user.email,
         _id : user._id
     }
     
-    const token = await jwt.sign({auth : authParams}, process.env.SECRET_KEY, {expiresIn : '2h'});
+    const token = await jwt.sign(payload, process.env.SECRET_KEY, {expiresIn : '2h'});
 
     return token;
 }

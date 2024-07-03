@@ -1,16 +1,18 @@
 const router = require("express").Router();
 const movieService = require("../services/movieService.js");
 const castService = require("../services/castService.js");
-const {auth} = require("../middlewares/authMiddleware.js"); 
+const {isAuth} = require("../middlewares/authMiddleware.js"); 
 
-router.get('/create', auth, (req, res) => {
+
+router.get('/create', isAuth, async (req, res) => {
     res.render('movie/create');
 });
 
-router.post('/create', async (req, res) => {
-    let newMovie = req.body;
-
-    await movieService.createMovie(newMovie);
+router.post('/create', isAuth, async (req, res) => {
+    const  movieData = req.body;
+    const userId = req.user._id;
+    
+    await movieService.createMovie(movieData, userId);
 
     res.redirect('/');
 });
