@@ -38,6 +38,14 @@ const attach = (movieId, castId) => {
     return Movie.findByIdAndUpdate(movieId, {$addToSet: {casts : castId}});
 };
 
+const edit = (movieId, movieData) => {
+    return Movie.findByIdAndUpdate(movieId, movieData);
+};
+
+const deleteMovie = (movieId) => {
+    return Movie.findByIdAndDelete(movieId);
+}
+
 
 module.exports = {
     getAllMovies,
@@ -45,4 +53,6 @@ module.exports = {
     getOneMovie, 
     getMovieByCriteres,
     attach,
+    edit,
+    deleteMovie
 }
