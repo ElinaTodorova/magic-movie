@@ -4,7 +4,14 @@ const jwt = require('../lib/jwt.js');
 require('dotenv').config()
 
 
-const register = (userData) => User.create(userData);
+const register = (userData) => {
+    const user = User.findOne({email : userData.email});
+
+    if(user) {
+        throw new Error('This user already exist')
+    };
+    return User.create(userData);
+}
 
 const login = async (email, password) => {
     const user = await User.findOne({email});
