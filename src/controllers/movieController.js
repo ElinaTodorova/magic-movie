@@ -20,9 +20,12 @@ router.post('/create', isAuth, async (req, res) => {
 router.get('/movies/:id', async (req, res) => {
     const movieId = req.params.id;
     const movie = await movieService.getOneMovie(movieId).lean();
+
+    const isOwner = movie.owner == req?.user._id
+
     movie.rating = new Array(Number(movie.rating)).fill(true)
 
-    res.render('movie/details', {movie})
+    res.render('movie/details', {movie, isOwner})
 });
 
 router.get('/search', async (req, res) => {
@@ -33,7 +36,7 @@ router.get('/search', async (req, res) => {
     res.render('movie/search', {movies})
 });
 
-router.get('/movies/:movieId/attach', async (req, res) => {
+router.get('/movies/:movieId/attach', isAuth, async (req, res) => {
     const movieId = req.params.movieId
     const movie = await movieService.getOneMovie(movieId).lean();
     const casts = await castService.getAvailableCasts(movieId)
@@ -41,7 +44,7 @@ router.get('/movies/:movieId/attach', async (req, res) => {
     res.render('cast/attach', {movie, casts})
 });
 
-router.post('/movies/:movieId/attach', async (req, res) => {
+router.post('/movies/:movieId/attach',isAuth, async (req, res) => {
     const castId = req.body.cast;
     const movieId = req.params.movieId;
 
@@ -50,14 +53,14 @@ router.post('/movies/:movieId/attach', async (req, res) => {
     res.redirect(`/movies/${movieId}/attach`)
 });
 
-router.get('/movies/:movieId/edit', async (req, res) => {
+router.get('/movies/:movieId/edit', isAuth, async (req, res) => {
     const movieId = req.params.movieId;
     const movie = await movieService.getOneMovie(movieId).lean();
 
     res.render('movie/edit', {movie});
 });
 
-router.post('/movies/:movieId/edit', async (req, res) => {
+router.post('/movies/:movieId/edit', isAuth, async (req, res) => {
     const movieId = req.params.movieId;
     const movieData = req.body;
 
@@ -66,12 +69,12 @@ router.post('/movies/:movieId/edit', async (req, res) => {
     res.redirect(`/movies/${movieId}`)
 });
 
-router.get('/movies/:movieId/delete', async (req, res) => {
+router.get('/movies/:movieId/delete', isAuth, async (req, res) => {
     const movieId = req.params.movieId;
 
     await movieService.deleteMovie(movieId);
 
     res.redirect('/');
-})
+});
 
 module.exports = router;
