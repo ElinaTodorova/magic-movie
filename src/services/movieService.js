@@ -34,13 +34,15 @@ const getMovieByCriteres = (title, genre, year) => {
     return Movie.find(query);
 };
 
-const attach = async (movieId, castId) => {
-    return Movie.findByIdAndUpdate(movieId, {$push: {casts : castId}});
-}
+const attach = (movieId, castId) => {
+    return Movie.findByIdAndUpdate(movieId, {$addToSet: {casts : castId}});
+};
+
+
 module.exports = {
     getAllMovies,
     createMovie,
     getOneMovie, 
     getMovieByCriteres,
-    attach
+    attach,
 }

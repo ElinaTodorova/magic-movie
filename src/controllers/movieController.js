@@ -31,8 +31,9 @@ router.get('/search', async (req, res) => {
 });
 
 router.get('/movies/:movieId/attach', async (req, res) => {
-    const movie = await movieService.getOneMovie(req.params.movieId).lean();
-    const casts = await castService.getAll().lean();
+    const movieId = req.params.movieId
+    const movie = await movieService.getOneMovie(movieId).lean();
+    const casts = await castService.getAvailableCasts(movieId)
 
     res.render('cast/attach', {movie, casts})
 });

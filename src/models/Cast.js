@@ -21,6 +21,10 @@ const castSchema = new mongoose.Schema({
     castImage : {
         type : String, 
         match : /^https?/
+    },
+     movies: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Movie'
     }
 });
 
