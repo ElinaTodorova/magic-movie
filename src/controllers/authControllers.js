@@ -26,11 +26,16 @@ router.get('/register', (req, res) => {
 
 router.post('/register', hashPass, async (req, res) => {
     const userData = req.body;
-    console.log(userData)
 
-    await userServices.register(userData);
+    try {
+      userServices.register(userData);
 
-    res.redirect('/auth/login')
+      res.redirect('/auth/login')
+    }catch(err){
+      res.redirect('/auth/register');
+      console.error(err)
+    }
+  
 });
 
 router.get('/logout', (req, res) => {

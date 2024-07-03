@@ -4,8 +4,8 @@ const jwt = require('../lib/jwt.js');
 require('dotenv').config()
 
 
-const register = (userData) => {
-    const user = User.findOne({email : userData.email});
+const register = async (userData) => {
+    const user = await User.findOne({email : userData.email});
 
     if(user) {
         throw new Error('This user already exist')
